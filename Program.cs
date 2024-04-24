@@ -1,6 +1,7 @@
 ﻿
 using RegisterOfStudents.Models;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 List<Student> students = new List<Student>()
 {
@@ -46,12 +47,73 @@ List<Student> students = new List<Student>()
     }
 };
 
-students.ForEach(student => Console.WriteLine($"{student.FirstName}\n{student.Email}"));
+Console.WriteLine("1. Student First Name and Emails");
+Console.WriteLine("2. Students with 'a' in First Name");
+Console.WriteLine("3. Look for the student in the database");
+Console.WriteLine("4. Adding student information to the database");
+Console.Write("Enter command: ");
+string command = Console.ReadLine();
 
-foreach(Student student in students)
+if(command.Contains("1") is true)
 {
-    if(student.FirstName.ToLower().Contains("a"))
+students.ForEach(a => Console.WriteLine($"{a.FirstName}\n{a.Email}"));
+}
+
+if(command.Contains("2") is true)
+{
+Console.WriteLine("Students with 'a' in First Name:");
+    foreach(Student student in students)
     {
-        Console.WriteLine(student.FirstName);
+        if(student.FirstName.ToLower().Contains("a"))
+        {
+            Console.WriteLine(student.FirstName);
+        }
+    }
+}
+
+if(command.Contains("3") is true)
+{
+Console.WriteLine("Enter student first name: ");
+string name = Console.ReadLine();
+Student student1 = students.FirstOrDefault(s => s.FirstName.ToLower() == name.ToLower());
+
+    if(student1 != null)
+    {
+        Console.WriteLine($"Student foun - Id: {student1.Id}, First Name: {student1.FirstName}, Last Name: {student1.LastName}, Age: {student1.Age}, Email: {student1.Email}");
+    }
+    else
+    {
+        Console.WriteLine("Not Found");
+    }
+}
+
+if(command.Contains("4") is true)
+{
+    Console.Write("First Name: ");
+    string newFirstName = Console.ReadLine();
+    Console.Write("Last Name: ");
+    string newLastName = Console.ReadLine();
+    Console.Write("Age: ");
+    int newAge = Convert.ToInt32(Console.ReadLine());
+    Console.Write("Email: ");
+    string newEmail = Console.ReadLine();
+
+    Student student2 = new Student()
+    {
+        FirstName = newFirstName,
+        LastName = newLastName,
+        Age = newAge,
+        Email = newEmail
+    };
+
+    bool studentExists = students.Any(a => a.FirstName.ToLower() == newFirstName.ToLower()); 
+    if(!studentExists )
+    {
+        students.Add(student2);
+        Console.WriteLine("New added student successfully");
+    }
+    else
+    {
+        Console.WriteLine("Not Added");
     }
 }
