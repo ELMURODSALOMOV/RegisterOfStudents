@@ -9,6 +9,8 @@ namespace RegisterOfStudents.Broker.Storeage
 {
     internal interface IStoreageBroker
     {
+        void PrintNameAndEmail(string firstName, string Email);
+        bool LetterCheckout(string firstName);
         bool CheckoutStudent(Student student);
         Student AddStudent(Student student);
     }

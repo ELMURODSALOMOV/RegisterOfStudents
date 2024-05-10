@@ -106,14 +106,22 @@ if(command.Contains("4") is true)
         Email = newEmail
     };
 
-    bool studentExists = students.Any(a => a.FirstName.ToLower() == newFirstName.ToLower()); 
-    if(!studentExists )
+    bool studentExists = false;
+    foreach (var student in students)
     {
-        students.Add(student2);
-        Console.WriteLine("New added student successfully");
+        if (student.FirstName.ToLower().Contains(newFirstName.ToLower()) is true)
+        {
+            studentExists = true;
+            break;
+        }
+    }
+    if(studentExists)
+    {
+        Console.WriteLine("Not Added");
     }
     else
     {
-        Console.WriteLine("Not Added");
+        students.Add(student2);
+        Console.WriteLine("New student added successfully");
     }
 }
