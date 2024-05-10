@@ -11,7 +11,7 @@ namespace RegisterOfStudents.Service
     {
         Print DisplayStudent(int id);
         List<Student> CheckoutByLetter(char letter);
-        Student CheckoutById(Student student);
+        Student CheckoutByName(string firstName);
         Student InsertStudent(Student student);
     }
 }
