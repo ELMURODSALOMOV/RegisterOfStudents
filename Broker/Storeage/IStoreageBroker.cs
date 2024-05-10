@@ -10,7 +10,7 @@ namespace RegisterOfStudents.Broker.Storeage
     internal interface IStoreageBroker
     {
         Print PrintNameAndEmail(int id);
-        bool FindStudentByLetter(string firstName);
+        List<Student> FindStudentByLetter(char letter);
         Student FindStudentById(int id);
         Student AddStudent(Student student);
     }

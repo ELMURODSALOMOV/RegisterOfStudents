@@ -9,9 +9,9 @@ namespace RegisterOfStudents.Service
 {
     internal interface IStudentService
     {
-        Student Print(int id);
-        bool LetterCheck(string firstName);
-        bool Check(Student student);
+        Print DisplayStudent(int id);
+        List<Student> CheckoutByLetter(char letter);
+        Student CheckoutById(Student student);
         Student InsertStudent(Student student);
     }
 }
