@@ -11,15 +11,22 @@ namespace RegisterOfStudents.Service
 {
     internal class StudentService : IStudentService
     {
-        private readonly ILoggingBroker loggingBroker;
-        private readonly IStoreageBroker storeageBroker;
-        public StudentService()
+        public Student CheckoutById(Student student)
         {
-            this.loggingBroker = new LoggingBroker();
-            this.storeageBroker = new ListStoreageBroker();
+            throw new NotImplementedException();
         }
 
-        public bool Check(Student student)
+        public List<Student> CheckoutByLetter(char letter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Print DisplayStudent(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Student InsertStudent(Student student)
         {
             throw new NotImplementedException();
         }
