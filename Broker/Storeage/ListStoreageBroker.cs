@@ -63,11 +63,11 @@ namespace RegisterOfStudents.Broker.Storeage
             return student;
         }
 
-        public Student FindStudentById(int id)
+        public Student FindStudentByName(string firstName)
         {
             foreach (Student studentItem in this.students)
             {
-                if (studentItem.Id == id)
+                if (studentItem.FirstName == firstName)
                 {
                     return studentItem;
                 }
