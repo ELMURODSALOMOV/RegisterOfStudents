@@ -9,7 +9,7 @@ namespace RegisterOfStudents.Service
 {
     internal interface IStudentService
     {
-        void Print(string firstName, string Email);
+        Student Print(int id);
         bool LetterCheck(string firstName);
         bool Check(Student student);
         Student InsertStudent(Student student);
