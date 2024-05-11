@@ -27,36 +27,6 @@ namespace RegisterOfStudents.Service
                 : ValidationCheckoutByLetter(letter);
         }
 
-        private List<Student> ValidationCheckoutByLetter(char letter)
-        {
-           List<Student> studenInfo = this.storeageBroker.FindStudentByLetter(letter);
-            foreach (var student in studenInfo)
-            {
-                if (student.FirstName.Contains(letter.ToString()))
-                {
-                    this.loggingBroker.LogInformation($"Id: {student.Id}\n" +
-                            $"FirstName: {student.FirstName}\nLastName: {student.LastName}\n" +
-                            $"Age: {student.Age}\nEmail: {student.Email}");
-                    return studenInfo; 
-                }
-                else
-                {
-                    if(!student.FirstName.Contains(letter.ToString()))
-                    {
-                        this.loggingBroker.LogError("The reference is not valid.");
-                        return studenInfo;
-                    }
-                }
-            }
-            return new List<Student>();
-        }
-
-        private List<Student> InvalidCheckoutByLetter()
-        {
-            this.loggingBroker.LogError("Not Found.");
-            return new List<Student>();
-        }
-
         public Student CheckoutByName(string firstName)
         {
             return firstName is null
@@ -66,7 +36,9 @@ namespace RegisterOfStudents.Service
 
         public Print DisplayStudent(int id)
         {
-            return new Print();
+            return id is 0
+                ? InvalidDisplayStudent()
+                : ValidationAndDisplayStudent(id);
                  
         }
 
@@ -107,6 +79,36 @@ namespace RegisterOfStudents.Service
             return new Student();
         }
 
+        private List<Student> ValidationCheckoutByLetter(char letter)
+        {
+           List<Student> studenInfo = this.storeageBroker.FindStudentByLetter(letter);
+            foreach (var student in studenInfo)
+            {
+                if (student.FirstName.Contains(letter.ToString()))
+                {
+                    this.loggingBroker.LogInformation($"Id: {student.Id}\n" +
+                            $"FirstName: {student.FirstName}\nLastName: {student.LastName}\n" +
+                            $"Age: {student.Age}\nEmail: {student.Email}");
+                    return studenInfo; 
+                }
+                else
+                {
+                    if(!student.FirstName.Contains(letter.ToString()))
+                    {
+                        this.loggingBroker.LogError("The reference is not valid.");
+                        return studenInfo;
+                    }
+                }
+            }
+            return new List<Student>();
+        }
+
+        private List<Student> InvalidCheckoutByLetter()
+        {
+            this.loggingBroker.LogError("Not Found.");
+            return new List<Student>();
+        }
+
         private Student ValidationAndCheckoutByName(string firstName)
         {
             if (String.IsNullOrWhiteSpace(firstName))
@@ -130,6 +132,28 @@ namespace RegisterOfStudents.Service
 
                 return studentInfo;
             }
+        }
+
+        private Print ValidationAndDisplayStudent(int id)
+        {
+            var studentInfo = this.storeageBroker.PrintNameAndEmail(id);
+            if(studentInfo.FirstName is not null)
+            {
+                this.loggingBroker.LogInformation($"FirstName: {studentInfo.FirstName}\n" +
+                    $"Email: {studentInfo.Email}");
+                return studentInfo;
+            }
+            else
+            {
+                this.loggingBroker.LogError("No information found.");
+                return new Print();
+            }
+        }
+
+        private Print InvalidDisplayStudent()
+        {
+            this.loggingBroker.LogError("Invalid Id.");
+            return new Print();
         }
 
         private Student InsertStudentInvalid()
