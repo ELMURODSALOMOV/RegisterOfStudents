@@ -64,6 +64,43 @@ namespace RegisterOfStudents.Service
                 : ValidationAndCheckoutByName(firstName);
         }
 
+        public Print DisplayStudent(int id)
+        {
+            return new Print();
+                 
+        }
+
+        public Student InsertStudent(Student student)
+        {
+            return student is null
+                ? InsertStudentInvalid()
+                : ValidationAndInsertStudent(student);
+        }
+
+        private Student ValidationAndInsertStudent(Student student)
+        {
+            if(student.Id is 0
+                || String.IsNullOrWhiteSpace(student.FirstName)
+                || String.IsNullOrWhiteSpace(student.LastName))
+            {
+                this.loggingBroker.LogError("Invalid student information.");
+                return new Student();
+            }
+            else
+            {
+                var studentInformation = this.storeageBroker.AddStudent(student);
+                if(studentInformation is null)
+                {
+                    this.loggingBroker.LogError("Not Added.");
+                }
+                else
+                {
+                    this.loggingBroker.LogInformation("Secssesfull.");
+                }
+                return studentInformation;
+            }
+        }
+
         private Student InvalidCheckoutByName()
         {
             this.loggingBroker.LogError("The firstname is invalid.");
@@ -95,15 +132,10 @@ namespace RegisterOfStudents.Service
             }
         }
 
-        public Print DisplayStudent(int id)
+        private Student InsertStudentInvalid()
         {
-            return new Print();
-                 
-        }
-
-        public Student InsertStudent(Student student)
-        {
-            throw new NotImplementedException();
+            this.loggingBroker.LogError("Student info is null.");
+            return new Student();
         }
     }
 }
