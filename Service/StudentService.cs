@@ -29,20 +29,32 @@ namespace RegisterOfStudents.Service
 
         private List<Student> ValidationCheckoutByLetter(char letter)
         {
-            if(String.IsNullOrWhiteSpace(letter.ToString()))
+           List<Student> studenInfo = this.storeageBroker.FindStudentByLetter(letter);
+            foreach (var student in studenInfo)
             {
-                this.loggingBroker.LogError("The reference is not valid.");
-                return new List<Student>();
+                if (student.FirstName.Contains(letter.ToString()))
+                {
+                    this.loggingBroker.LogInformation($"Id: {student.Id}\n" +
+                            $"FirstName: {student.FirstName}\nLastName: {student.LastName}\n" +
+                            $"Age: {student.Age}\nEmail: {student.Email}");
+                    return studenInfo; 
+                }
+                else
+                {
+                    if(!student.FirstName.Contains(letter.ToString()))
+                    {
+                        this.loggingBroker.LogError("The reference is not valid.");
+                        return studenInfo;
+                    }
+                }
             }
-            else
-            {
-                var studenInfo = this.storeageBroker.FindStudentByLetter(letter);
-            }
+            return new List<Student>();
         }
 
         private List<Student> InvalidCheckoutByLetter()
         {
-            throw new NotImplementedException();
+            this.loggingBroker.LogError("Not Found.");
+            return new List<Student>();
         }
 
         public Student CheckoutByName(string firstName)
@@ -81,12 +93,11 @@ namespace RegisterOfStudents.Service
 
                 return studentInfo;
             }
-
         }
 
         public Print DisplayStudent(int id)
         {
-            return id is 0
+            return new Print();
                  
         }
 
