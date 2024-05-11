@@ -6,6 +6,6 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 StudentService studentService = new StudentService();
-Console.WriteLine("Harfni kiriting");
-char letter = Convert.ToChar(Console.ReadLine());
-studentService.CheckoutByLetter(letter);
+Console.Write("Id ni kiriting: ");
+int id = Convert.ToInt32(Console.ReadLine());
+studentService.DisplayStudent(id);
