@@ -53,7 +53,9 @@ namespace RegisterOfStudents.Service
         {
             if(student.Id is 0
                 || String.IsNullOrWhiteSpace(student.FirstName)
-                || String.IsNullOrWhiteSpace(student.LastName))
+                || String.IsNullOrWhiteSpace(student.LastName)
+                || student.Age is 0
+                || String.IsNullOrWhiteSpace(student.Email))
             {
                 this.loggingBroker.LogError("Invalid student information.");
                 return new Student();
@@ -61,13 +63,13 @@ namespace RegisterOfStudents.Service
             else
             {
                 var studentInformation = this.storeageBroker.AddStudent(student);
-                if(studentInformation is null)
+                if(studentInformation.Email is not null)
                 {
-                    this.loggingBroker.LogError("Not Added.");
+                    this.loggingBroker.LogInformation("Succssesfull.");
                 }
                 else
                 {
-                    this.loggingBroker.LogInformation("Secssesfull.");
+                    this.loggingBroker.LogError("Not Added.");
                 }
                 return studentInformation;
             }
@@ -82,25 +84,20 @@ namespace RegisterOfStudents.Service
         private List<Student> ValidationCheckoutByLetter(char letter)
         {
            List<Student> studenInfo = this.storeageBroker.FindStudentByLetter(letter);
-            foreach (var student in studenInfo)
+            if(studenInfo is not null)
             {
-                if (student.FirstName.Contains(letter.ToString()))
+                foreach (var student in studenInfo)
                 {
                     this.loggingBroker.LogInformation($"Id: {student.Id}\n" +
                             $"FirstName: {student.FirstName}\nLastName: {student.LastName}\n" +
                             $"Age: {student.Age}\nEmail: {student.Email}");
-                    return studenInfo; 
-                }
-                else
-                {
-                    if(!student.FirstName.Contains(letter.ToString()))
-                    {
-                        this.loggingBroker.LogError("The reference is not valid.");
-                        return studenInfo;
-                    }
                 }
             }
-            return new List<Student>();
+            else
+            {
+                this.loggingBroker.LogError("The user for the entered letter does not exist.");
+            }
+            return studenInfo;
         }
 
         private List<Student> InvalidCheckoutByLetter()
@@ -119,7 +116,7 @@ namespace RegisterOfStudents.Service
             else
             {
                 var studentInfo = this.storeageBroker.FindStudentByName(firstName);
-                if (studentInfo is not null)
+                if (studentInfo.Email is not null)
                 {
                     this.loggingBroker.LogInformation($"Reference found.\nId: {studentInfo.Id}\n" +
                         $"FirstName: {studentInfo.FirstName}\nLastName: {studentInfo.LastName}\n" +
