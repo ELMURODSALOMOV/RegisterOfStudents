@@ -32,6 +32,8 @@ do
     if (command.Contains("4") is true)
     {
         Student student = new Student();
+        Console.Write("Enter the id: ");
+        student.Id = Convert.ToInt32(Console.ReadLine());
         Console.Write("Enter the first name: ");
         student.FirstName = Console.ReadLine();
         Console.Write("Enter the last name: ");
