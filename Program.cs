@@ -1,4 +1,8 @@
-﻿using RegisterOfStudents.Models;
+﻿//----------------------------------------
+// Great Code Team (c) All rights reserved
+//----------------------------------------
+
+using RegisterOfStudents.Models;
 using RegisterOfStudents.Service;
 
 StudentService studentService = new StudentService();
@@ -49,5 +53,15 @@ do
     if (isCommand.Contains("no") is true)
     {
         isContinue = false;
+    }
+    else if (isCommand.Contains("yes") is true)
+    {
+        isContinue = true;
+        Console.Clear();
+    }
+    else
+    {
+        isContinue = false;
+        Console.WriteLine("The command was issued incorrectly.");
     }
 }while(isContinue is true);
