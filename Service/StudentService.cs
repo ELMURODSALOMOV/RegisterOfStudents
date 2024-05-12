@@ -1,12 +1,10 @@
-﻿using RegisterOfStudents.Broker.Logging;
+﻿//----------------------------------------
+// Great Code Team (c) All rights reserved
+//----------------------------------------
+
+using RegisterOfStudents.Broker.Logging;
 using RegisterOfStudents.Broker.Storeage;
 using RegisterOfStudents.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RegisterOfStudents.Service
 {
@@ -34,7 +32,7 @@ namespace RegisterOfStudents.Service
                 : ValidationAndCheckoutByName(firstName);
         }
 
-        public Print DisplayStudent(int id)
+        public DemoStudent DisplayStudent(int id)
         {
             return id is 0
                 ? InvalidDisplayStudent()
@@ -84,7 +82,7 @@ namespace RegisterOfStudents.Service
         private List<Student> ValidationCheckoutByLetter(char letter)
         {
            List<Student> studenInfo = this.storeageBroker.FindStudentByLetter(letter);
-            if(studenInfo is not null)
+            if(studenInfo.Count is not 0)
             {
                 foreach (var student in studenInfo)
                 {
@@ -131,7 +129,7 @@ namespace RegisterOfStudents.Service
             }
         }
 
-        private Print ValidationAndDisplayStudent(int id)
+        private DemoStudent ValidationAndDisplayStudent(int id)
         {
             var studentInfo = this.storeageBroker.PrintNameAndEmail(id);
             if(studentInfo.FirstName is not null)
@@ -143,14 +141,14 @@ namespace RegisterOfStudents.Service
             else
             {
                 this.loggingBroker.LogError("No information found.");
-                return new Print();
+                return new DemoStudent();
             }
         }
 
-        private Print InvalidDisplayStudent()
+        private DemoStudent InvalidDisplayStudent()
         {
             this.loggingBroker.LogError("Invalid Id.");
-            return new Print();
+            return new DemoStudent();
         }
 
         private Student InsertStudentInvalid()

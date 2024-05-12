@@ -1,8 +1,8 @@
 # RegisterOfStudents
 You can add or delete or update student information in this project.
 
-## Menu
 ![Menu](/Image/Menu.png)
+## Menu
 ##### 1.0 Display Student
 ##### 2.0 Checkout by letter
 ##### 3.0 Checkout by name
@@ -28,7 +28,7 @@ This function helps you to search the data in the database, that is, you enter a
 ### 2.2 The function returns an error
 If you enter an uppercase letter in the base of the function, it will return this error.
 
-![Error code](/Image/)
+![Error code](/Image/Checkout-letter-Error.gif)
 
 ## 3.0 Checkout by name
 ### 3.1 You can see how the function works and what tasks it performs

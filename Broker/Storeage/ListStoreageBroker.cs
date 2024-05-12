@@ -1,19 +1,17 @@
-﻿using RegisterOfStudents.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//----------------------------------------
+// Great Code Team (c) All rights reserved
+//----------------------------------------
+
+using RegisterOfStudents.Models;
 
 namespace RegisterOfStudents.Broker.Storeage
 {
     internal class ListStoreageBroker : IStoreageBroker
     {
-        List<Student> demoStudents = new List<Student>();
         private List<Student> students = new List<Student>();
+
         public ListStoreageBroker()
         {
-
             this.students.Add(new Student()
             {
                 Id = 1,
@@ -54,7 +52,6 @@ namespace RegisterOfStudents.Broker.Storeage
                 Age = 27,
                 Email = "Abduvaliyev@gmail.com"
             });
-            
         }
 
         public Student AddStudent(Student student)
@@ -96,13 +93,13 @@ namespace RegisterOfStudents.Broker.Storeage
             return studentNew;
         }
 
-        public Print PrintNameAndEmail(int id)
+        public DemoStudent PrintNameAndEmail(int id)
         {
             foreach (Student studentItem in this.students)
             {
                 if (studentItem.Id == id)
                 {
-                    var studentInfo = new Print()
+                    var studentInfo = new DemoStudent()
                     {
                         FirstName = studentItem.FirstName,
                         Email = studentItem.Email
@@ -110,7 +107,7 @@ namespace RegisterOfStudents.Broker.Storeage
                     return studentInfo;
                 }
             }
-            return new Print();
+            return new DemoStudent();
         }
     }
 }
